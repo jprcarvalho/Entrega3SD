@@ -1,0 +1,3 @@
+example/ws/handler/HeaderHandler.class
+example/ws/handler/MessageContextHandler.class
+example/ws/handler/LoggingHandler.class
