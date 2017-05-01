@@ -5,8 +5,8 @@ org/komparator/supplier/ws/ListPurchases.class
 org/komparator/supplier/ws/BadProductId_Exception.class
 org/komparator/supplier/ws/BuyProductResponse.class
 org/komparator/supplier/ws/BadProduct.class
-org/komparator/supplier/ws/BuyProduct.class
 org/komparator/supplier/ws/cli/SupplierClientApp.class
+org/komparator/supplier/ws/BuyProduct.class
 org/komparator/supplier/ws/SearchProductsResponse.class
 org/komparator/supplier/ws/InsufficientQuantity_Exception.class
 org/komparator/supplier/ws/SupplierPortType.class

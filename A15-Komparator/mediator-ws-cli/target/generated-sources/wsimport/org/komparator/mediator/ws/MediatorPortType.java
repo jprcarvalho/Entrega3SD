@@ -2,6 +2,7 @@
 package org.komparator.mediator.ws;
 
 import java.util.List;
+import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -20,6 +21,7 @@ import javax.xml.ws.ResponseWrapper;
  * 
  */
 @WebService(name = "MediatorPortType", targetNamespace = "http://ws.mediator.komparator.org/")
+@HandlerChain(file = "MediatorPortType_handler.xml")
 @XmlSeeAlso({
     ObjectFactory.class
 })
@@ -119,8 +121,8 @@ public interface MediatorPortType {
      * @param itemId
      * @param itemQty
      * @param cartId
-     * @throws InvalidItemId_Exception
      * @throws InvalidQuantity_Exception
+     * @throws InvalidItemId_Exception
      * @throws NotEnoughItems_Exception
      * @throws InvalidCartId_Exception
      */

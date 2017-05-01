@@ -1,8 +1,8 @@
 org/komparator/mediator/ws/InvalidCreditCard.class
 org/komparator/mediator/ws/InvalidText_Exception.class
-org/komparator/mediator/ws/ListCartsResponse.class
 org/komparator/mediator/ws/InvalidQuantity.class
 org/komparator/mediator/ws/PingResponse.class
+org/komparator/mediator/ws/ListCartsResponse.class
 org/komparator/mediator/ws/Clear.class
 org/komparator/mediator/ws/package-info.class
 org/komparator/mediator/ws/Ping.class
@@ -19,11 +19,11 @@ org/komparator/mediator/ws/InvalidText.class
 org/komparator/mediator/ws/CartItemView.class
 org/komparator/mediator/ws/MediatorPortImpl.class
 org/komparator/mediator/ws/MediatorEndpointManager.class
-org/komparator/mediator/ws/AddToCart.class
 org/komparator/mediator/ws/CartView.class
+org/komparator/mediator/ws/AddToCart.class
 org/komparator/mediator/ws/BuyCart.class
-org/komparator/mediator/ws/ShopHistory.class
 org/komparator/mediator/ws/ItemView.class
+org/komparator/mediator/ws/ShopHistory.class
 org/komparator/mediator/ws/MediatorApp.class
 org/komparator/mediator/ws/ListCarts.class
 org/komparator/mediator/ws/ObjectFactory.class
@@ -36,9 +36,9 @@ org/komparator/mediator/ws/GetItemsResponse.class
 org/komparator/mediator/ws/SearchItems.class
 org/komparator/mediator/ws/AddToCartResponse.class
 org/komparator/mediator/ws/ClearResponse.class
-org/komparator/mediator/ws/GetItems.class
 org/komparator/mediator/ws/InvalidItemId_Exception.class
 org/komparator/mediator/ws/NotEnoughItems_Exception.class
+org/komparator/mediator/ws/GetItems.class
 org/komparator/mediator/ws/NotEnoughItems.class
 org/komparator/mediator/ws/SearchItemsResponse.class
 org/komparator/mediator/ws/EmptyCart_Exception.class

@@ -18,7 +18,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "SupplierService", targetNamespace = "http://ws.supplier.komparator.org/", wsdlLocation = "file:/afs/.ist.utl.pt/users/2/3/ist178223/SDENTREGA2/A15-Komparator/supplier-ws-cli/../supplier-ws/src/main/resources/supplier.1_0.wsdl")
+@WebServiceClient(name = "SupplierService", targetNamespace = "http://ws.supplier.komparator.org/", wsdlLocation = "file:/afs/.ist.utl.pt/users/2/3/ist178223/newRepo/Entrega3SD/A15-Komparator/supplier-ws-cli/../supplier-ws/src/main/resources/supplier.1_0.wsdl")
 @HandlerChain(file = "SupplierService_handler.xml")
 public class SupplierService
     extends Service
@@ -32,7 +32,7 @@ public class SupplierService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/afs/.ist.utl.pt/users/2/3/ist178223/SDENTREGA2/A15-Komparator/supplier-ws-cli/../supplier-ws/src/main/resources/supplier.1_0.wsdl");
+            url = new URL("file:/afs/.ist.utl.pt/users/2/3/ist178223/newRepo/Entrega3SD/A15-Komparator/supplier-ws-cli/../supplier-ws/src/main/resources/supplier.1_0.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

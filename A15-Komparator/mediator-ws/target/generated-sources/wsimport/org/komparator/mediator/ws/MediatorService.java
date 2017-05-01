@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "MediatorService", targetNamespace = "http://ws.mediator.komparator.org/", wsdlLocation = "file:/afs/.ist.utl.pt/users/2/3/ist178223/SDENTREGA2/A15-Komparator/mediator-ws/src/main/resources/mediator.1_0.wsdl")
+@WebServiceClient(name = "MediatorService", targetNamespace = "http://ws.mediator.komparator.org/", wsdlLocation = "file:/afs/.ist.utl.pt/users/2/3/ist178223/newRepo/Entrega3SD/A15-Komparator/mediator-ws/src/main/resources/mediator.1_0.wsdl")
 public class MediatorService
     extends Service
 {
@@ -30,7 +30,7 @@ public class MediatorService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/afs/.ist.utl.pt/users/2/3/ist178223/SDENTREGA2/A15-Komparator/mediator-ws/src/main/resources/mediator.1_0.wsdl");
+            url = new URL("file:/afs/.ist.utl.pt/users/2/3/ist178223/newRepo/Entrega3SD/A15-Komparator/mediator-ws/src/main/resources/mediator.1_0.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

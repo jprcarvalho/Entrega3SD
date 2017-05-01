@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.ws.BindingProvider;
 
@@ -54,6 +55,7 @@ import pt.ulisboa.tecnico.sdis.ws.uddi.UDDIRecord;
 		targetNamespace = "http://ws.mediator.komparator.org/", 
 		serviceName = "MediatorService"
 )
+@HandlerChain(file="/mediator-ws_handler-chain.xml")
 public class MediatorPortImpl implements MediatorPortType {
 	//Price comparator needs testing
 	public class ItemViewComparator implements Comparator<ItemView> {
