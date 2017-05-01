@@ -2,8 +2,15 @@ package org.komparator.mediator.ws.cli;
 
 import static javax.xml.ws.BindingProvider.ENDPOINT_ADDRESS_PROPERTY;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +20,7 @@ import javax.xml.ws.BindingProvider;
 import org.komparator.mediator.ws.*;
 import org.komparator.security.CryptoUtil;
 
+import pt.ulisboa.tecnico.sdis.cert.CertUtil;
 import pt.ulisboa.tecnico.sdis.ws.uddi.UDDINaming;
 
 
@@ -42,6 +50,8 @@ public class MediatorClient implements MediatorPortType{
     /** WS endpoint address */
     private String wsURL = null; // default value is defined inside WSDL
 
+
+
     public String getWsURL() {
         return wsURL;
     }
@@ -58,13 +68,18 @@ public class MediatorClient implements MediatorPortType{
     }
 
     /** constructor with provided web service URL */
+
+    
     public MediatorClient(String wsURL) throws MediatorClientException {
+    	
         this.wsURL = wsURL;
         createStub();
     }
 
     /** constructor with provided UDDI location and name */
     public MediatorClient(String uddiURL, String wsName) throws MediatorClientException {
+    	
+
         this.uddiURL = uddiURL;
         this.wsName = wsName;
         uddiLookup();
@@ -147,8 +162,8 @@ public class MediatorClient implements MediatorPortType{
 	 @Override
 	 public ShoppingResultView buyCart(String cartId, String creditCardNr)
 			 throws EmptyCart_Exception, InvalidCartId_Exception, InvalidCreditCard_Exception {
-		 CryptoUtil crypt = new CryptoUtil();
-		// crypt.asymCipher(creditCardNr.getBytes());
+
+
 		 return port.buyCart(cartId, creditCardNr);
 	 }
 

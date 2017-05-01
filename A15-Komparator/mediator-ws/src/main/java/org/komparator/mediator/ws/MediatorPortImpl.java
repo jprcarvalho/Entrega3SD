@@ -2,8 +2,17 @@ package org.komparator.mediator.ws;
 
 
 import static javax.xml.ws.BindingProvider.ENDPOINT_ADDRESS_PROPERTY;
-
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +21,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
+import static javax.xml.bind.DatatypeConverter.printBase64Binary;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.ws.BindingProvider;
 
+import org.komparator.security.CryptoUtil;
 import org.komparator.supplier.ws.BadProduct;
 import org.komparator.supplier.ws.BadProductId;
 import org.komparator.supplier.ws.BadProductId_Exception;
@@ -44,6 +59,8 @@ import org.komparator.supplier.domain.QuantityException;
 import org.komparator.supplier.domain.Supplier;
 */
 import pt.ulisboa.tecnico.sdis.ws.uddi.UDDIRecord;
+import pt.ulisboa.tecnico.sdis.cert.CertUtil;
+
 
 // TODO annotate to bind with WSDL
 // TODO implement port type interface
@@ -84,18 +101,80 @@ public class MediatorPortImpl implements MediatorPortType {
 	// end point manager
 	//private Key publicKey;
 	private int i=0;
+	private Certificate cert =null;
+	
+
+	   
+	private CryptoUtil cryptkeeper = null; //spooky//	  .-.
+													//	 (o o) boo!
+													//	 | O \
+													//	  \   \
+													//	   `~~~'
+    private KeyStore keys = null;
+    private char[] keystorePassword = "7Nhx1rNT".toCharArray();
+    private Key privateKey =null;
+    private Key publicKey = null;
 	private ArrayList<ShoppingResultView> history = new ArrayList<ShoppingResultView>();
 	private MediatorEndpointManager endpointManager;
 	private Collection<UDDIRecord> records;
 	private HashMap<SupplierPortType,String> ports;
 	private ArrayList<CartView> carts = new ArrayList<CartView>();
 	public MediatorPortImpl(MediatorEndpointManager endpointManager) {
+		File certificateFile = new File("A15_Mediator.cer");
+		KeystoreSetup();
+			try {
+				this.cert = CertUtil.getX509CertificateFromFile(certificateFile);
+				this.publicKey = cert.getPublicKey();
+			} catch (FileNotFoundException | CertificateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			System.out.println("Certificate is setup, public key is: "+ publicKey.toString());
+			this.cryptkeeper = new CryptoUtil();
 		this.endpointManager = endpointManager;
+		
+		
+		/*crypto tests*/
+		String data = "ABC123TEST";
+		System.out.println("Encoding " + data);
+		try {
+			String encoded = printBase64Binary(cryptkeeper.asymCipher(data.getBytes(), publicKey) );
+			System.out.println(encoded);
+			
+			
+			System.out.println("Decoding:");
+			
+			System.out.println(printBase64Binary(cryptkeeper.asymDecipher(cryptkeeper.asymCipher(data.getBytes(), publicKey) , privateKey)));
+			
+		} catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException
+				| BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	// Main operations -------------------------------------------------------
 	//Function prototypes
+
 	
+	
+	    public void KeystoreSetup(){
+			
+			try {
+				this.keys=CertUtil.readKeystoreFromFile("A15_Mediator.jks", keystorePassword);
+			} catch (FileNotFoundException | KeyStoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 try {
+					this.privateKey = keys.getKey("a15_mediator", keystorePassword);
+				} catch (UnrecoverableKeyException | KeyStoreException | NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    }
 	
 	public List<ItemView> getItems(String productId) throws InvalidItemId_Exception {
 		
@@ -212,11 +291,16 @@ public class MediatorPortImpl implements MediatorPortType {
 	}
 	
 	
-	public ShoppingResultView buyCart(String cartID, String creditCardNumber) throws EmptyCart_Exception,InvalidCreditCard_Exception{
+	public ShoppingResultView buyCart(String cartID, String cypheredCreditCardNumber) throws EmptyCart_Exception,InvalidCreditCard_Exception{
 		ShoppingResultView result= null;
 		List<CartItemView> droppedItems = new ArrayList<CartItemView>();
 		List<CartItemView> purchasedItems = new ArrayList<CartItemView>();
 		int price = 0;
+		String creditCardNumber;
+		try {
+			creditCardNumber = printBase64Binary(cryptkeeper.asymDecipher(cypheredCreditCardNumber.getBytes(),privateKey));
+	
+
 		try{
 			if (checkCard(creditCardNumber)){
 				uddiRefreshSuppliers();
@@ -245,6 +329,11 @@ public class MediatorPortImpl implements MediatorPortType {
 			CreateShoppingResultView(Result.EMPTY,getCartPurchaseIdentifier(), purchasedItems,droppedItems,price);
 		}else{
 			CreateShoppingResultView(Result.PARTIAL,getCartPurchaseIdentifier(), purchasedItems,droppedItems,price);
+		}	
+		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
+				| BadPaddingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		return result;
 		

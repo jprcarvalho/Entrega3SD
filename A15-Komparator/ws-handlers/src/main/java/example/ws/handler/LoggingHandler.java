@@ -71,7 +71,12 @@ public class LoggingHandler implements SOAPHandler<SOAPMessageContext> {
 	 */
 	private void logToSystemOut(SOAPMessageContext smc) {
 		Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-
+		/*try {
+			System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("log.txt")),true));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		// print current timestamp
 		System.out.print("[");
 		System.out.print(dateFormatter.format(new Date()));
