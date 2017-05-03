@@ -70,6 +70,13 @@ public class LoggingHandler implements SOAPHandler<SOAPMessageContext> {
 	 * IOException
 	 */
 	private void logToSystemOut(SOAPMessageContext smc) {
+		/*System.out.println(this.getClass().getSimpleName() + " Soap handler writting output to log.txt\n");
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("log.txt"), true));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
 		Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 		/*try {
 			System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("log.txt")),true));

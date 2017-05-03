@@ -1,5 +1,9 @@
 package example.ws.handler;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,10 +45,18 @@ public class CustomHandler implements SOAPHandler<SOAPMessageContext> {
 	 */
 	@Override
 	public boolean handleMessage(SOAPMessageContext smc) {
+		/*System.out.println(this.getClass().getSimpleName() + " Soap handler writting output to log.txt\n");
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("log.txt"), true));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+
 		System.out.println("AddHeaderHandler: Handling message.");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		Boolean outboundElement = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-
+		
 		try {
 			if (outboundElement.booleanValue()) {
 				System.out.println("Writing header in outbound SOAP message...");

@@ -139,14 +139,8 @@ public class MediatorPortImpl implements MediatorPortType {
 		String data = "ABC123TEST";
 		System.out.println("Encoding " + data);
 		try {
-			String encoded = printBase64Binary(cryptkeeper.asymCipher(data.getBytes(), publicKey) );
-			System.out.println(encoded);
-			
-			
-			System.out.println("Decoding:");
-			
-			System.out.println(printBase64Binary(cryptkeeper.asymDecipher(cryptkeeper.asymCipher(data.getBytes(), publicKey) , privateKey)));
-			
+			String cipheredData = cryptkeeper.asymCipherString(data.getBytes(), publicKey);
+			System.out.println("Encrypted data is:"+ cipheredData + "\nDecrypted data is:" +cryptkeeper.asymDecipherString(cipheredData, privateKey,true));
 		} catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException
 				| BadPaddingException e) {
 			// TODO Auto-generated catch block
@@ -291,14 +285,14 @@ public class MediatorPortImpl implements MediatorPortType {
 	}
 	
 	
-	public ShoppingResultView buyCart(String cartID, String cypheredCreditCardNumber) throws EmptyCart_Exception,InvalidCreditCard_Exception{
+	public ShoppingResultView buyCart(String cartID, String cipheredCreditCardNumber) throws EmptyCart_Exception,InvalidCreditCard_Exception{
 		ShoppingResultView result= null;
 		List<CartItemView> droppedItems = new ArrayList<CartItemView>();
 		List<CartItemView> purchasedItems = new ArrayList<CartItemView>();
 		int price = 0;
-		String creditCardNumber;
+		//String creditCardNumber;
 		try {
-			creditCardNumber = printBase64Binary(cryptkeeper.asymDecipher(cypheredCreditCardNumber.getBytes(),privateKey));
+			String creditCardNumber = cryptkeeper.asymDecipherString(cipheredCreditCardNumber, privateKey,true);
 	
 
 		try{

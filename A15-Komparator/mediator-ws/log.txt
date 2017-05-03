@@ -1,0 +1,14 @@
+AddHeaderHandler: Handling message.
+Reading header in inbound SOAP message...
+Header value is 2017-05-03 19:53:51
+Message sent 774 milliseconds ago
+Message accepted
+[2017-05-03T19:53:51.774] intercepted  INbound SOAP message:
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header><d:myHeader xmlns:d="http://demo">2017-05-03 19:53:51</d:myHeader></SOAP-ENV:Header><S:Body><ns2:ping xmlns:ns2="http://ws.mediator.komparator.org/"><arg0>client</arg0></ns2:ping></S:Body></S:Envelope>
+[2017-05-03T19:53:52.846] intercepted OUTbound SOAP message:
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><S:Fault xmlns:ns3="http://www.w3.org/2003/05/soap-envelope"><faultcode>S:Server</faultcode><faultstring>HTTP transport error: java.net.ConnectException: Connection refused (Connection refused)</faultstring></S:Fault></S:Body></S:Envelope>
+Ignoring fault message...
+[2017-05-03T19:53:52.848] intercepted OUTbound SOAP message:
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><S:Fault xmlns:ns3="http://www.w3.org/2003/05/soap-envelope"><faultcode>S:Server</faultcode><faultstring>HTTP transport error: java.net.ConnectException: Connection refused (Connection refused)</faultstring></S:Fault></S:Body></S:Envelope>
+Stopped http://localhost:8080/mediator-ws/endpoint
+Unpublished 'A15_Mediator' from UDDI

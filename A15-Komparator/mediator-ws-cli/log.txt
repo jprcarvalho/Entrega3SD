@@ -1,0 +1,9 @@
+AddHeaderHandler: Handling message.
+Writing header in outbound SOAP message...
+[2017-05-03T19:53:51.756] intercepted OUTbound SOAP message:
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header><d:myHeader xmlns:d="http://demo">2017-05-03 19:53:51</d:myHeader></SOAP-ENV:Header><S:Body><ns2:ping xmlns:ns2="http://ws.mediator.komparator.org/"><arg0>client</arg0></ns2:ping></S:Body></S:Envelope>
+[2017-05-03T19:53:52.856] intercepted  INbound SOAP message:
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><S:Fault xmlns:ns3="http://www.w3.org/2003/05/soap-envelope"><faultcode>S:Server</faultcode><faultstring>HTTP transport error: java.net.ConnectException: Connection refused (Connection refused)</faultstring></S:Fault></S:Body></S:Envelope>
+Ignoring fault message...
+[2017-05-03T19:53:52.885] intercepted  INbound SOAP message:
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><S:Body><S:Fault xmlns:ns3="http://www.w3.org/2003/05/soap-envelope"><faultcode>S:Server</faultcode><faultstring>HTTP transport error: java.net.ConnectException: Connection refused (Connection refused)</faultstring></S:Fault></S:Body></S:Envelope>
