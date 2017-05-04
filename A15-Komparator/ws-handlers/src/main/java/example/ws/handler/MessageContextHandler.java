@@ -52,7 +52,6 @@ public class MessageContextHandler implements SOAPHandler<SOAPMessageContext> {
 	public void close(MessageContext messageContext) {
 		// nothing to clean up
 	}
-
 	private void printMessageContext(MessageContext map) {
 		System.out.println("Message context: (scope,key,value)");
 		try {

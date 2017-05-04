@@ -7,6 +7,12 @@
         		<handler>
 			<handler-class>example.ws.handler.CustomHandler</handler-class>
 		</handler>
+        
+        		</handler>
+        		<handler>
+			<handler-class>example.ws.handler.MessageContextHandler</handler-class>
+		</handler>
+        
                 <handler>
             <handler-class>example.ws.handler.LoggingHandler</handler-class>
         </handler>

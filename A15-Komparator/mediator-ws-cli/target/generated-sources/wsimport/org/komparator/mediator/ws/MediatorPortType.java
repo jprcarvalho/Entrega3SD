@@ -95,8 +95,8 @@ public interface MediatorPortType {
      * @param cartId
      * @return
      *     returns org.komparator.mediator.ws.ShoppingResultView
-     * @throws EmptyCart_Exception
      * @throws InvalidCreditCard_Exception
+     * @throws EmptyCart_Exception
      * @throws InvalidCartId_Exception
      */
     @WebMethod
@@ -121,10 +121,10 @@ public interface MediatorPortType {
      * @param itemId
      * @param itemQty
      * @param cartId
-     * @throws InvalidQuantity_Exception
      * @throws InvalidItemId_Exception
-     * @throws NotEnoughItems_Exception
+     * @throws InvalidQuantity_Exception
      * @throws InvalidCartId_Exception
+     * @throws NotEnoughItems_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "addToCart", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.AddToCart")

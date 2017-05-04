@@ -1,6 +1,8 @@
 package example.ws.handler;
 
 import java.io.File;
+import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
+import static javax.xml.bind.DatatypeConverter.printBase64Binary;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -24,6 +26,11 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.MessageContext.Scope;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
+
+import org.komparator.security.CryptoUtil;
+import org.w3c.dom.Node;
+
+import pt.ulisboa.tecnico.sdis.cert.CertUtil;
 
 
 public class CustomHandler implements SOAPHandler<SOAPMessageContext> {
@@ -60,7 +67,11 @@ public class CustomHandler implements SOAPHandler<SOAPMessageContext> {
 		try {
 			if (outboundElement.booleanValue()) {
 				System.out.println("Writing header in outbound SOAP message...");
-
+				String keyStoreFilePath = "A15_Mediator.jks";
+				char[] keyStorePassword = "7Nhx1rNT".toCharArray();
+				String keyAlias = "a15_mediator";
+				char[] keyPassword ="7Nhx1rNT".toCharArray();
+			
 				// get SOAP envelope
 				SOAPMessage msg = smc.getMessage();
 				SOAPPart sp = msg.getSOAPPart();
@@ -68,6 +79,16 @@ public class CustomHandler implements SOAPHandler<SOAPMessageContext> {
 
 				// add header
 				SOAPHeader sh = se.getHeader();
+				//the first child always carries the message
+				Node body = se.getBody().getFirstChild();
+				CryptoUtil cryptkeeper = new CryptoUtil();
+				//byte[] digitalSignature = cryptkeeper.createDigitalSignature(CertUtil.getPrivateKeyFromKeyStoreFile(keyStoreFilePath, keyStorePassword, keyAlias, keyPassword), body.toString().getBytes());
+				//System.out.println(printBase64Binary(digitalSignature));
+				/*
+				System.out.println("TEST \n\n\n ");
+				System.out.println(body.toString());
+				System.out.println("TEST \n\n\n ");
+				*/
 				if (sh == null)
 					sh = se.addHeader();
 

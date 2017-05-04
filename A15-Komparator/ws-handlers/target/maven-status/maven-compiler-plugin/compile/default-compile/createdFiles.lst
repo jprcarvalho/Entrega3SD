@@ -1,4 +1,4 @@
 example/ws/handler/HeaderHandler.class
-example/ws/handler/CustomHandler.class
 example/ws/handler/LoggingHandler.class
 example/ws/handler/MessageContextHandler.class
+example/ws/handler/CustomHandler.class

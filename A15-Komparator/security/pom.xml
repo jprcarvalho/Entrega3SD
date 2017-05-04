@@ -22,6 +22,11 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+        <groupId>pt.ulisboa.tecnico.sdis</groupId>
+    <artifactId>cert-util</artifactId>
+    <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <properties>

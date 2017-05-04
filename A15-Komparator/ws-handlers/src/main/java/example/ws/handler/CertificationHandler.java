@@ -1,11 +1,19 @@
 package example.ws.handler;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
 import javax.xml.soap.Name;
-import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPHeader;
@@ -17,24 +25,10 @@ import javax.xml.ws.handler.MessageContext.Scope;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-import org.w3c.dom.Node;
 
-/**
- * This SOAPHandler shows how to set/get values from headers in inbound/outbound
- * SOAP messages.
- *
- * A header is created in an outbound message and is read on an inbound message.
- *
- * The value that is read from the header is placed in a SOAP message context
- * property that can be accessed by other handlers or by the application.
- */
-public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
+public class CertificationHandler implements SOAPHandler<SOAPMessageContext> {
 
 	public static final String CONTEXT_PROPERTY = "my.property";
-
-	//
-	// Handler interface implementation
-	//
 
 	/**
 	 * Gets the header blocks that can be processed by this Handler instance. If
@@ -51,10 +45,18 @@ public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
 	 */
 	@Override
 	public boolean handleMessage(SOAPMessageContext smc) {
+		/*System.out.println(this.getClass().getSimpleName() + " Soap handler writting output to log.txt\n");
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("log.txt"), true));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+
 		System.out.println("AddHeaderHandler: Handling message.");
-
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		Boolean outboundElement = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-
+		
 		try {
 			if (outboundElement.booleanValue()) {
 				System.out.println("Writing header in outbound SOAP message...");
@@ -74,20 +76,19 @@ public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
 				SOAPHeaderElement element = sh.addHeaderElement(name);
 
 				// add header element value
-				int value = 22;
-				String valueString = Integer.toString(value);
+			
+				String valueString = LocalDateTime.now().format(formatter);//Integer.toString(value);
 				element.addTextNode(valueString);
 
 			} else {
 				System.out.println("Reading header in inbound SOAP message...");
-
+				
 				// get SOAP envelope header
+				
 				SOAPMessage msg = smc.getMessage();
 				SOAPPart sp = msg.getSOAPPart();
 				SOAPEnvelope se = sp.getEnvelope();
 				SOAPHeader sh = se.getHeader();
-				
-
 
 				// check header
 				if (sh == null) {
@@ -106,12 +107,24 @@ public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
 				SOAPElement element = (SOAPElement) it.next();
 
 				// get header element value
-				String valueString = element.getValue();
-				int value = Integer.parseInt(valueString);
 
+				String value = element.getValue();
+				LocalDateTime dateTime = LocalDateTime.parse(value, formatter);
+				long time = dateTime.until(LocalDateTime.now(), ChronoUnit.MILLIS);
 				// print received header
+				
 				System.out.println("Header value is " + value);
-
+				System.out.println("Message sent "+ time +" milliseconds ago");
+				//failure test
+				//time += 3000;
+				//failure test
+				if(time<=3000){
+					System.out.println("Message accepted");
+				}else{
+					System.out.println("Message sent too long ago, rejecting");
+					//implementar excecao mais especifica
+					throw new java.lang.RuntimeException();
+				}
 				// put header in a property context
 				smc.put(CONTEXT_PROPERTY, value);
 				// set property scope to application client/server class can

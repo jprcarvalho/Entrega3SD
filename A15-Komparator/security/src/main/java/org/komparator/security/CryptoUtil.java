@@ -3,6 +3,9 @@ package org.komparator.security;
 import java.io.*;
 import java.security.*;
 import javax.crypto.*;
+
+import pt.ulisboa.tecnico.sdis.cert.CertUtil;
+
 import java.util.*;
 import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
 import static javax.xml.bind.DatatypeConverter.printBase64Binary;
@@ -35,6 +38,19 @@ public class CryptoUtil {
 			return new String(asymDecipher(cipheredData.getBytes(),privateKey));
 		}
 	}
+	
+	
+	public byte[] createDigitalSignature(PrivateKey privateKey, byte[] plainBytes){
+		byte[] digitalSignature = CertUtil.makeDigitalSignature("SHA256withRSA", privateKey, plainBytes);
+		
+		return digitalSignature;
+	}
+	
+	public boolean checkDigitalSignature(PublicKey publicKey, byte[] plainBytes, byte[] digitalSignature){
+		
+		return CertUtil.verifyDigitalSignature("SHA256withRSA", publicKey, plainBytes, digitalSignature);
+	}
+	
     // TODO add security helper methods
 
 }

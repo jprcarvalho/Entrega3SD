@@ -12,6 +12,8 @@ import java.security.Key;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,8 +114,8 @@ public class MediatorPortImpl implements MediatorPortType {
 													//	   `~~~'
     private KeyStore keys = null;
     private char[] keystorePassword = "7Nhx1rNT".toCharArray();
-    private Key privateKey =null;
-    private Key publicKey = null;
+    private PrivateKey privateKey =null;
+    private PublicKey publicKey = null;
 	private ArrayList<ShoppingResultView> history = new ArrayList<ShoppingResultView>();
 	private MediatorEndpointManager endpointManager;
 	private Collection<UDDIRecord> records;
@@ -124,7 +126,7 @@ public class MediatorPortImpl implements MediatorPortType {
 		KeystoreSetup();
 			try {
 				this.cert = CertUtil.getX509CertificateFromFile(certificateFile);
-				this.publicKey = cert.getPublicKey();
+				this.publicKey = (PublicKey)cert.getPublicKey();
 			} catch (FileNotFoundException | CertificateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -163,7 +165,7 @@ public class MediatorPortImpl implements MediatorPortType {
 				e.printStackTrace();
 			}
 			 try {
-					this.privateKey = keys.getKey("a15_mediator", keystorePassword);
+					this.privateKey = (PrivateKey)keys.getKey("a15_mediator", keystorePassword);
 				} catch (UnrecoverableKeyException | KeyStoreException | NoSuchAlgorithmException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
