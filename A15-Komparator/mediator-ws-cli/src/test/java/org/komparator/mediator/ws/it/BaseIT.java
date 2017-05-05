@@ -3,27 +3,24 @@ package org.komparator.mediator.ws.it;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.junit.After;
+import javax.jws.HandlerChain;
+
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.komparator.mediator.ws.cli.MediatorClient;
-import org.komparator.supplier.ws.BadProductId_Exception;
-import org.komparator.supplier.ws.BadProduct_Exception;
-import org.komparator.supplier.ws.ProductView;
 import org.komparator.supplier.ws.cli.SupplierClient;
 
 public class BaseIT {
 
 	private static final String TEST_PROP_FILE = "/test.properties";
-
-		
 	protected static Properties testProps;
 
 	protected static MediatorClient mediatorClient;
-	
-	protected static SupplierClient sup1;
-	protected static SupplierClient sup2;
+
+	private static final int NR_SUPPLIERS = 2;
+	protected static SupplierClient[] supplierClients = new SupplierClient[NR_SUPPLIERS];
+	protected static String[] supplierNames = new String[NR_SUPPLIERS];
+	protected static String[] supplierUrls = new String[NR_SUPPLIERS];
 
 	@BeforeClass
 	public static void oneTimeSetup() throws Exception {
@@ -43,21 +40,30 @@ public class BaseIT {
 		String wsName = testProps.getProperty("ws.name");
 		String wsURL = testProps.getProperty("ws.url");
 
+		String supplierNameBase = testProps.getProperty("supplier.ws.name");
+		String supplierUrlBase = testProps.getProperty("supplier.ws.url");
+		for (int i = 0; i < NR_SUPPLIERS; i++) {
+			// add 1 to i because supplier names start with 1 not 0
+			supplierNames[i] = supplierNameBase + (i + 1);
+			supplierUrls[i] = supplierUrlBase.replaceAll("\\$i", Integer.toString(i + 1));
+		}
+
 		if ("true".equalsIgnoreCase(uddiEnabled)) {
 			mediatorClient = new MediatorClient(uddiURL, wsName);
+			for (int i = 0; i < NR_SUPPLIERS; i++)
+				supplierClients[i] = new SupplierClient(wsURL, uddiURL, supplierNames[i]);
 		} else {
 			mediatorClient = new MediatorClient(wsURL);
+			for (int i = 0; i < NR_SUPPLIERS; i++)
+				supplierClients[i] = new SupplierClient(supplierUrls[i]);
 		}
-		
-		sup1 = new SupplierClient(wsURL, uddiURL, "A15_Supplier1");
-		sup2 = new SupplierClient(wsURL, uddiURL, "A15_Supplier2");
-		
+
 	}
-	
+
 	@AfterClass
-	public static void oneTimeTearDown() {
-		// clear remote service state after all tests
-		mediatorClient.clear();
+	public static void cleanup() {
+		for (int i = 0; i < NR_SUPPLIERS; i++)
+			supplierClients[i] = null;
 	}
 
 }
