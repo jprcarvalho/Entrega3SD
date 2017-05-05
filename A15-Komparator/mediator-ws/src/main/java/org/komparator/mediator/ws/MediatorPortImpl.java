@@ -47,6 +47,7 @@ import org.komparator.supplier.ws.InsufficientQuantity_Exception;
 import org.komparator.supplier.ws.ProductView;
 import org.komparator.supplier.ws.SupplierPortType;
 import org.komparator.supplier.ws.SupplierService;
+import org.komparator.supplier.ws.cli.SupplierClient;
 
 import pt.ulisboa.tecnico.sdis.ws.CreditCard;
 import pt.ulisboa.tecnico.sdis.ws.CreditCardImplService;
@@ -62,8 +63,6 @@ import org.komparator.supplier.domain.Supplier;
 */
 import pt.ulisboa.tecnico.sdis.ws.uddi.UDDIRecord;
 import pt.ulisboa.tecnico.sdis.cert.CertUtil;
-
-
 // TODO annotate to bind with WSDL
 // TODO implement port type interface
 @WebService(
@@ -77,7 +76,20 @@ import pt.ulisboa.tecnico.sdis.cert.CertUtil;
 @HandlerChain(file="/mediator-ws_handler-chain.xml")
 public class MediatorPortImpl implements MediatorPortType {
 	//Price comparator needs testing
-	public class ItemViewComparator implements Comparator<ItemView> {
+	public class ItemViewComparatorDesc implements Comparator<ItemView> {
+		
+	    @Override
+	    public int compare(ItemView o1, ItemView o2) {
+	    	//System.out.println(o1.getDesc() + " compareTo " + o2.getDesc());
+	        int i = o1.getItemId().getProductId().compareTo(o2.getItemId().getProductId());
+	        if (i != 0) 
+	        	return i;
+	        else 
+	        	return o1.getPrice()-o2.getPrice();
+	    }
+	}
+	public class ItemViewComparatorPrice implements Comparator<ItemView> {
+	
 	    @Override
 	    public int compare(ItemView o1, ItemView o2) {
 	        return o1.getPrice()-o2.getPrice();
@@ -101,12 +113,8 @@ public class MediatorPortImpl implements MediatorPortType {
 		}
 	}*/
 	// end point manager
-	//private Key publicKey;
-	private int i=0;
-	private Certificate cert =null;
 	
-
-	   
+	//crypto
 	private CryptoUtil cryptkeeper = null; //spooky//	  .-.
 													//	 (o o) boo!
 													//	 | O \
@@ -116,11 +124,16 @@ public class MediatorPortImpl implements MediatorPortType {
     private char[] keystorePassword = "7Nhx1rNT".toCharArray();
     private PrivateKey privateKey =null;
     private PublicKey publicKey = null;
+	private Certificate cert =null;
+
+	private int i=0;
 	private ArrayList<ShoppingResultView> history = new ArrayList<ShoppingResultView>();
 	private MediatorEndpointManager endpointManager;
 	private Collection<UDDIRecord> records;
 	private HashMap<SupplierPortType,String> ports;
 	private ArrayList<CartView> carts = new ArrayList<CartView>();
+	private HashMap<SupplierClient,String> suppliers;
+
 	public MediatorPortImpl(MediatorEndpointManager endpointManager) {
 		File certificateFile = new File("A15_Mediator.cer");
 		KeystoreSetup();
@@ -149,14 +162,11 @@ public class MediatorPortImpl implements MediatorPortType {
 			e.printStackTrace();
 		}
 		
+		
 	}
 
 	// Main operations -------------------------------------------------------
-	//Function prototypes
-
-	
-	
-	    public void KeystoreSetup(){
+		 public void KeystoreSetup(){
 			
 			try {
 				this.keys=CertUtil.readKeystoreFromFile("A15_Mediator.jks", keystorePassword);
@@ -172,6 +182,8 @@ public class MediatorPortImpl implements MediatorPortType {
 				}
 	    }
 	
+	
+	
 	public List<ItemView> getItems(String productId) throws InvalidItemId_Exception {
 		
 		if (productId == null)
@@ -182,9 +194,9 @@ public class MediatorPortImpl implements MediatorPortType {
 		List<ItemView> result = new ArrayList<ItemView>();
 		ItemView currentItem=null;
 		uddiRefreshSuppliers();
-		for(SupplierPortType i : ports.keySet()){
+		for(SupplierClient i : suppliers.keySet()){
 			try{
-				currentItem=CreateItemView(i.getProduct(productId), ports.get(i));
+				currentItem=CreateItemView(i.getProduct(productId), suppliers.get(i));
 				if(currentItem != null){
 					result.add(currentItem);
 				}
@@ -192,10 +204,10 @@ public class MediatorPortImpl implements MediatorPortType {
 				throwInvalidItemId("Bad item id");
 			}
 		}
-		result.sort(new ItemViewComparator());
+		result.sort(new ItemViewComparatorPrice());
 		return result;
 	}
-
+	
 	
 	public List<ItemView> searchItems(String productId) throws InvalidText_Exception {
 		
@@ -206,11 +218,11 @@ public class MediatorPortImpl implements MediatorPortType {
 		List<ProductView> thing = new ArrayList<ProductView>();
 		ItemView currentItem=null;
 		uddiRefreshSuppliers();
-		for(SupplierPortType i : ports.keySet()){
+		for(SupplierClient i : suppliers.keySet()){
 			try{
 				thing=i.searchProducts(productId);
 				for(ProductView p : thing){
-					currentItem=CreateItemView(p,ports.get(i));		
+					currentItem=CreateItemView(p,suppliers.get(i));		
 				if(currentItem != null){
 					result.add(currentItem);
 					}
@@ -221,7 +233,11 @@ public class MediatorPortImpl implements MediatorPortType {
 			}
 		
 		}
-		result.sort(new ItemViewComparator());
+		
+		result.sort(new ItemViewComparatorDesc());
+		
+		for (ItemView item : result)
+			System.out.println("Item Description:" + item.getDesc() + "\n" + "Price:" + item.getPrice());
 		return result;
 	}
 	
@@ -229,57 +245,57 @@ public class MediatorPortImpl implements MediatorPortType {
 		this.i++;
 		return (new Integer(i)).toString();
 	}
+	
+	
 	@Override
 	public void addToCart(String cartId, ItemIdView itemId,int itemQty) throws InvalidCartId_Exception, InvalidItemId_Exception, InvalidQuantity_Exception, NotEnoughItems_Exception {
 		
-		if(!properText(cartId) && cartId == null){
+		if (noproperText(cartId)) {
 			throwInvalidCartId(cartId +" isn't a well formed search query and cannot be null");
 		}
 		
+		if (itemId == null)
+			throwInvalidItemId(itemId +" isn't a well formed search query and cannot be null");
+		
+
+		if (noproperText(itemId.getSupplierId())) {
+			throwInvalidItemId(itemId +" isn't a well formed search query and cannot be null");
+		}
 		
 		if(itemQty <= 0){
 			throwInvalidQuantity("Quantity must be a positive number!");
 		}
 		
 		boolean cartExists = false;
-		boolean itemExists = false;	
 		
 		SupplierPortType supplier = null;
 		uddiRefreshSuppliers();
-		for(SupplierPortType p : ports.keySet()){
-			if(ports.get(p).equals(itemId.getSupplierId())){
-				System.out.println("Found supplier: " + itemId.getSupplierId());
+		for(SupplierClient p : suppliers.keySet()){
+			if(suppliers.get(p).equals(itemId.getSupplierId())){
 				supplier = p;
-			}		
+			}
 		}
 		if(supplier==null){
-			System.out.println("No such supplier " +itemId.getSupplierId());
+			System.out.println("No such supplier " + itemId.getSupplierId());
 			return;
 		}
+		
+
 		try{
-			ItemView purchaseTarget = CreateItemView(supplier.getProduct(itemId.getProductId()),itemId.getSupplierId());
+			ProductView product = supplier.getProduct(itemId.getProductId());
+			if (product == null)
+				throwInvalidItemId(itemId +" isn't a well formed search query and cannot be null");
+			ItemView purchaseTarget = CreateItemView(product, itemId.getSupplierId());
 			for(CartView cart : carts){
-				if(cart.getCartId() == cartId ){
+				if(cart.getCartId().equals(cartId)){
 					cartExists = true;
-					for(CartItemView item : cart.getItems()){
-						//since we cant override the equals method on the sources we have to pull this kind of stunt
-						if(EqualItems(item.getItem(),purchaseTarget) ){
-							itemExists = true;
-							item.setQuantity(item.getQuantity() + itemQty); 
-						}
-					}
-					if(!itemExists){
-	
-						cart.getItems().add(CreateCartItemView(purchaseTarget, itemQty));
-					}
+					ShopItem(cart, product, purchaseTarget, itemQty);
 				}
 			}
 			if(!cartExists){
-				//TODO
 				CartView newCart = CreateCartView(cartId);
-				newCart.getItems().add(CreateCartItemView(purchaseTarget,itemQty));
 				carts.add(newCart);
-				//add item to new cart
+				ShopItem(newCart, product, purchaseTarget, itemQty);
 			}
 		}catch(BadProductId_Exception e){
 			throwInvalidItemId(itemId +" isn't a well formed search query and cannot be null");
@@ -287,19 +303,35 @@ public class MediatorPortImpl implements MediatorPortType {
 	}
 	
 	
-	public ShoppingResultView buyCart(String cartID, String cipheredCreditCardNumber) throws EmptyCart_Exception,InvalidCreditCard_Exception{
-		ShoppingResultView result= null;
+	public ShoppingResultView buyCart(String cartID, String cipheredCreditCardNumber) throws EmptyCart_Exception, InvalidCartId_Exception, InvalidCreditCard_Exception {
+		
+		if (noproperText(cartID)) {
+			throwInvalidCartId(cartID +" isn't a well formed search query and cannot be null");
+		}
+		
+		if(getCart(cartID) == null)
+			throwInvalidCartId("Cart doesn't exist");
+		
+		try {
+			String creditCardNumber = cryptkeeper.asymDecipherString(cipheredCreditCardNumber, privateKey,true);
+		
+		if (noproperText(creditCardNumber)) {
+			throwInvalidCreditCard(creditCardNumber +" isn't a well formed search query and cannot be null");
+		}
+		
+		if (creditCardNumber.length() != 16) {
+			throwInvalidCreditCard(creditCardNumber +" isn't a well formed search query and cannot be null");
+		}
+		
+		
+		ShoppingResultView result = null;
 		List<CartItemView> droppedItems = new ArrayList<CartItemView>();
 		List<CartItemView> purchasedItems = new ArrayList<CartItemView>();
 		int price = 0;
-		//String creditCardNumber;
-		try {
-			String creditCardNumber = cryptkeeper.asymDecipherString(cipheredCreditCardNumber, privateKey,true);
-	
-
 		try{
-			if (checkCard(creditCardNumber)){
+			if (checkCard(creditCardNumber)) {
 				uddiRefreshSuppliers();
+				System.out.println(getCart(cartID));
 				if(getCart(cartID).getItems().isEmpty()){
 					throwEmptyCart("No items in the cart");
 				}
@@ -316,31 +348,39 @@ public class MediatorPortImpl implements MediatorPortType {
 				
 			}
 			
-		}catch(CreditCardClientException e){
+		}
+		catch(CreditCardClientException e){
 			throwInvalidCreditCard("Bad credit card");
 		}
+		catch(UDDINamingException e){
+			throwInvalidCreditCard("Bad credit card");
+		}
+		
+
 		if(droppedItems.isEmpty()){
-			CreateShoppingResultView(Result.COMPLETE,getCartPurchaseIdentifier(), purchasedItems,droppedItems,price);
+			result = CreateShoppingResultView(Result.COMPLETE,getCartPurchaseIdentifier(), purchasedItems,droppedItems,price);
 		}else if (purchasedItems.isEmpty()){
-			CreateShoppingResultView(Result.EMPTY,getCartPurchaseIdentifier(), purchasedItems,droppedItems,price);
+			result = CreateShoppingResultView(Result.EMPTY,getCartPurchaseIdentifier(), purchasedItems,droppedItems,price);
 		}else{
-			CreateShoppingResultView(Result.PARTIAL,getCartPurchaseIdentifier(), purchasedItems,droppedItems,price);
-		}	
-		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
-				| BadPaddingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			result = CreateShoppingResultView(Result.PARTIAL,getCartPurchaseIdentifier(), purchasedItems,droppedItems,price);
 		}
 		return result;
+		}catch(InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
+				| BadPaddingException e1){
+			e1.printStackTrace();
+			return null;
+		}
 		
 	}
-	public boolean checkCard(String creditCardNumber) throws CreditCardClientException{
+	
+	public boolean checkCard(String creditCardNumber) throws CreditCardClientException, UDDINamingException {
 		 String uddiURL = endpointManager.getuddiURL();
-		 String wsName = endpointManager.getWsName();
-		 CreditCardClient CC = new CreditCardClient(uddiURL,wsName);	
-		 return CC.validateNumber(creditCardNumber);
-
-
+		 UDDINaming uddiNaming = endpointManager.getUddiNaming();
+		 try {
+			 CreditCardClient CC = new CreditCardClient(uddiNaming.lookup(uddiURL));
+			 return CC.validateNumber(creditCardNumber);
+		 }
+		 catch (UDDINamingException e) {return false;}
 	}
 
 	public List<CartView> listCarts(){ 
@@ -353,16 +393,37 @@ public class MediatorPortImpl implements MediatorPortType {
 	}
 	
 	public List<ShoppingResultView> shopHistory(){ return history;}
+	
 	public void uddiRefreshSuppliers() {
+		UDDINaming naming = null;
+		//SupplierPortType port = null;
+		SupplierClient succ= null;
+        try {
+            naming = new UDDINaming(this.endpointManager.getuddiURL());
+            records = naming.listRecords("A15_Supplier%" );
+          //  ports = new HashMap<SupplierPortType,String>();
+            suppliers = new HashMap<SupplierClient,String>();
+            for(UDDIRecord i : records ){
+            	succ = new SupplierClient(i.getUrl());
+            	this.suppliers.put(succ, i.getOrgName());
+            	
+            	/*
+            	port = createStub(i.getUrl());
+            	 this.ports.put(port, i.getOrgName());*/
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }		
+	}
+	@Deprecated
+	public void uddiRefreshSuppliers(boolean a) {
 		UDDINaming naming = null;
 		SupplierPortType port = null;
         try {
             naming = new UDDINaming(this.endpointManager.getuddiURL());
             records = naming.listRecords("A15_Supplier%" );
             ports = new HashMap<SupplierPortType,String>();
-         //   System.out.println("Listing uddi records");
             for(UDDIRecord i : records ){
-            	//System.out.println("Generating port from " + i);
             	 port = createStub(i.getUrl());
             	 this.ports.put(port, i.getOrgName());
             }
@@ -370,6 +431,8 @@ public class MediatorPortImpl implements MediatorPortType {
             e.printStackTrace();
         }		
 	}
+	
+	
   /*  private void createCC() {
 
         CreditCardImplService service = new CreditCardImplService();
@@ -403,27 +466,32 @@ public class MediatorPortImpl implements MediatorPortType {
 	
 	// Auxiliary operations --------------------------------------------------	
 	
-	public boolean properText(String text){
+	public boolean noproperText(String text){
 		//Checks if the string has whitespace then matches it against alphanumeric REGEX 
-		if (text==null ){return false;}
-		return (!text.matches(" ") && !text.matches("") && !text.matches("\n") && !text.matches("\t")/*&& text.matches("^[a-zA-Z0-9]*$")*/);
+		if (text==null ){return true;}
+		return (text.matches(" ") || text.matches("") || text.matches("\n") || text.matches("\t")/*&& text.matches("^[a-zA-Z0-9]*$")*/);
 	}
 	
 	public String ping(String message){
 		String result = "";
 		//maybe lock
+		//System.out.println("Test \n\n\n\n\n\n\n");
 		uddiRefreshSuppliers();		
-		for(SupplierPortType i : ports.keySet()){
-			result+=i.ping("From" + ports.get(i));
-			System.out.println("Pinged " + ports.get(i) );
+		for(SupplierClient i : suppliers.keySet()){
+	
+			result+=i.ping("From" + suppliers.get(i));
+			System.out.println("Pinged " + suppliers.get(i) );
 		}
 		return result;		
 	}
+	
 	public void clear(){
 		uddiRefreshSuppliers();
-		for(SupplierPortType i : ports.keySet()){
+		System.out.println("Clear suppliers!!");
+		for(SupplierClient i : suppliers.keySet()){
 			i.clear();
 		}
+		carts.clear();
 	}
 	
 	
@@ -440,10 +508,10 @@ public class MediatorPortImpl implements MediatorPortType {
 		return newCart;
 		
 	}
-	public CartItemView CreateCartItemView(ItemView item, int quantity){
+	public CartItemView CreateCartItemView(ItemView item){
 		if(item==null){return null;}
 		CartItemView result = new CartItemView();
-		result.quantity = quantity;
+		result.quantity = 0;
 		result.item = item;
 		return result;
 	}
@@ -465,7 +533,10 @@ public class MediatorPortImpl implements MediatorPortType {
 	}
 	
 	public ShoppingResultView CreateShoppingResultView(Result result,String id, List<CartItemView> PurchasedItems, List<CartItemView> DroppedItems, int price ){
+		
 		ShoppingResultView res = new ShoppingResultView();
+		res.purchasedItems = new ArrayList<CartItemView>();
+		res.droppedItems = new ArrayList<CartItemView>();
 		res.setResult(result);
 		res.setId(id);
 		res.setTotalPrice(price);
@@ -488,6 +559,26 @@ public class MediatorPortImpl implements MediatorPortType {
 			}
 		}
 		return null;
+	}
+	
+	public void ShopItem(CartView cart, ProductView product, ItemView purchaseTarget, int itemQty) throws NotEnoughItems_Exception, InvalidItemId_Exception {
+		boolean itemExists = false;
+		for(CartItemView item : cart.getItems()) {
+			//since we cant override the equals method on the sources we have to pull this kind of stunt
+			if(item.getItem().getDesc().equals(purchaseTarget.getDesc())){
+				itemExists = true;
+				if (product.getQuantity() - itemQty < 0 || product.getQuantity() == item.getQuantity())
+					throwNotEnoughItems("Not enough quantity in stock");
+				item.setQuantity(item.getQuantity() + itemQty);
+			}
+		}
+		if(!itemExists){
+			CartItemView newItem = CreateCartItemView(purchaseTarget);
+			if (product.getQuantity() - itemQty < 0)
+				throwNotEnoughItems("Not enough quantity in stock");
+			newItem.setQuantity(newItem.getQuantity() + itemQty);
+			cart.getItems().add(newItem);
+		}
 	}
     // TODO
 

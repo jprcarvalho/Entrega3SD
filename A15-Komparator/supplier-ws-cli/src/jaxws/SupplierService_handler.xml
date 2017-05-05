@@ -7,6 +7,9 @@
         		<handler>
 			<handler-class>example.ws.handler.CustomHandler</handler-class>
 		</handler>
+            <handler>
+            <handler-class>example.ws.handler.supplierHandler</handler-class>
+        </handler>
                 <handler>
             <handler-class>example.ws.handler.LoggingHandler</handler-class>
         </handler>

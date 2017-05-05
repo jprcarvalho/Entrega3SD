@@ -54,10 +54,10 @@ public class SupplierClient implements SupplierPortType {
 	}
 
 	/** constructor with provided web service URL */
-	/*public SupplierClient(String wsURL) throws SupplierClientException {
+	public SupplierClient(String wsURL) throws SupplierClientException {
 		this.wsURL = wsURL;
 		createStub();
-	} */
+	} 
 	//untested
 	public SupplierClient(String wsURL, String UDDIAddress, String serverName) throws UDDINamingException{
 		this.wsURL = wsURL;

@@ -58,9 +58,9 @@ public interface SupplierPortType {
      * @param productId
      * @return
      *     returns java.lang.String
-     * @throws InsufficientQuantity_Exception
-     * @throws BadQuantity_Exception
      * @throws BadProductId_Exception
+     * @throws BadQuantity_Exception
+     * @throws InsufficientQuantity_Exception
      */
     @WebMethod
     @WebResult(name = "purchaseId", targetNamespace = "")
@@ -134,8 +134,8 @@ public interface SupplierPortType {
     /**
      * 
      * @param productToCreate
-     * @throws BadProduct_Exception
      * @throws BadProductId_Exception
+     * @throws BadProduct_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "createProduct", targetNamespace = "http://ws.supplier.komparator.org/", className = "org.komparator.supplier.ws.CreateProduct")

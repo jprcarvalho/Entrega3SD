@@ -11,7 +11,6 @@ org/komparator/mediator/ws/InvalidCreditCard_Exception.class
 org/komparator/mediator/ws/MediatorPortType.class
 org/komparator/mediator/ws/MediatorService.class
 org/komparator/mediator/ws/Result.class
-org/komparator/mediator/ws/MediatorPortImpl$ItemViewComparator.class
 org/komparator/mediator/ws/InvalidCartId_Exception.class
 org/komparator/mediator/ws/ShoppingResultView.class
 org/komparator/mediator/ws/InvalidItemId.class
@@ -29,12 +28,14 @@ org/komparator/mediator/ws/ListCarts.class
 org/komparator/mediator/ws/ObjectFactory.class
 org/komparator/mediator/ws/EmptyCart.class
 org/komparator/mediator/ws/BuyCartResponse.class
+org/komparator/mediator/ws/MediatorPortImpl$ItemViewComparatorDesc.class
 org/komparator/mediator/ws/ShopHistoryResponse.class
 org/komparator/mediator/ws/ItemIdView.class
 org/komparator/mediator/ws/InvalidQuantity_Exception.class
 org/komparator/mediator/ws/GetItemsResponse.class
 org/komparator/mediator/ws/SearchItems.class
 org/komparator/mediator/ws/AddToCartResponse.class
+org/komparator/mediator/ws/MediatorPortImpl$ItemViewComparatorPrice.class
 org/komparator/mediator/ws/ClearResponse.class
 org/komparator/mediator/ws/InvalidItemId_Exception.class
 org/komparator/mediator/ws/NotEnoughItems_Exception.class
