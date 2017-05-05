@@ -46,6 +46,7 @@ import pt.ulisboa.tecnico.sdis.ws.cli.CAClient;
 public class mediatorHandler implements SOAPHandler<SOAPMessageContext> {
 	private CA ca = new CAPortImplService().getCAPortImplPort(); 
 	private String certName = "A15_Mediator";
+	private CAClient client;
 	public static final String CONTEXT_PROPERTY = "my.property";
 
 	/**
@@ -115,10 +116,11 @@ public class mediatorHandler implements SOAPHandler<SOAPMessageContext> {
 			} else {
 				
 				System.out.println("Reading header in inbound SOAP message...");
+				client = new CAClient("http://sec.sd.rnl.tecnico.ulisboa.pt:8081/ca?WSDL");
 				
 				// get SOAP envelope header
 				CertUtil CT = new CertUtil();
-				String cname =  ca.getCertificate(certName);
+				String cname =  client.getCertificate(certName);//ca.getCertificate(certName);
 				Certificate cert = CertUtil.getX509CertificateFromPEMString(cname);
 				PublicKey pk = cert.getPublicKey();
 				System.out.println("\n\n\n DIGITAL SIGNATURE DECRYPT:"+ pk +"  \n\n\n");

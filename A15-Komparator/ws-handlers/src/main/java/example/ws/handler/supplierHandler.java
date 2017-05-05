@@ -41,11 +41,13 @@ import org.w3c.dom.Node;
 import pt.ulisboa.tecnico.sdis.cert.CertUtil;
 import pt.ulisboa.tecnico.sdis.ws.CA;
 import pt.ulisboa.tecnico.sdis.ws.CAPortImplService;
+import pt.ulisboa.tecnico.sdis.ws.cli.CAClient;
 
 
 public class supplierHandler implements SOAPHandler<SOAPMessageContext> {
 	private CA ca = new CAPortImplService().getCAPortImplPort(); 
-	private String certName = "A15_Supplier1";
+	private CAClient client ;
+	private String certName = "A15_Supplier2";
 	private CryptoUtil cryptkeeper = new CryptoUtil();
 	public static final String CONTEXT_PROPERTY = "my.property";
 
@@ -79,9 +81,9 @@ public class supplierHandler implements SOAPHandler<SOAPMessageContext> {
 		try {
 			if (outboundElement.booleanValue()) {
 				System.out.println("Writing header in outbound SOAP message...");
-				String keyStoreFilePath = "A15_Supplier1.jks";
+				String keyStoreFilePath = "A15_Supplier2.jks";
 				char[] keyStorePassword = "7Nhx1rNT".toCharArray();
-				String keyAlias = "a15_supplier";
+				String keyAlias = "a15_supplier2";
 				char[] keyPassword ="7Nhx1rNT".toCharArray();
 			
 				// get SOAP envelope
@@ -118,7 +120,10 @@ public class supplierHandler implements SOAPHandler<SOAPMessageContext> {
 				
 				// get SOAP envelope header
 				CertUtil CT = new CertUtil();
-				String cname =  ca.getCertificate(certName);
+				client = new CAClient("http://sec.sd.rnl.tecnico.ulisboa.pt:8081/ca?WSDL");
+				
+				String cname =  client.getCertificate(certName); //ca.getCertificate(certName);
+				
 				Certificate cert = CertUtil.getX509CertificateFromPEMString(cname);
 				PublicKey pk = cert.getPublicKey();
 				System.out.println("\n\n\n DIGITAL SIGNATURE DECRYPT:"+ pk +"  \n\n\n");
@@ -144,7 +149,6 @@ public class supplierHandler implements SOAPHandler<SOAPMessageContext> {
 				Name name = se.createName("myHeader", "d", "http://demo");
 				Iterator it = sh.getChildElements(name);
 				// check header element
-				System.out.println("bla"+ it.hasNext() + "\n\n\n\n\n\n");
 				SOAPElement element = (SOAPElement) it.next();
 				System.out.println("Teste1: " + element.getValue());
 				if (!it.hasNext()) {

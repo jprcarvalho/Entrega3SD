@@ -47,10 +47,10 @@ public class MediatorClientApp {
         System.out.println("fetched");
         client.searchItems("b");
         System.out.println("Searched");
-        ItemIdView i =new ItemIdView();
+       /* ItemIdView i =new ItemIdView();
         i.setProductId("wasd");
         i.setSupplierId("A15_Supplier1");
-        client.addToCart("Test", i, 20);
+        client.addToCart("Test", i, 20);*/
 
     }
 }
