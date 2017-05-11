@@ -24,29 +24,31 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _InvalidItemId_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidItemId");
     private final static QName _ClearResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "clearResponse");
     private final static QName _AddToCart_QNAME = new QName("http://ws.mediator.komparator.org/", "addToCart");
-    private final static QName _InvalidText_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidText");
-    private final static QName _PingResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "pingResponse");
     private final static QName _SearchItems_QNAME = new QName("http://ws.mediator.komparator.org/", "searchItems");
     private final static QName _BuyCartResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "buyCartResponse");
     private final static QName _GetItems_QNAME = new QName("http://ws.mediator.komparator.org/", "getItems");
     private final static QName _SearchItemsResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "searchItemsResponse");
     private final static QName _BuyCart_QNAME = new QName("http://ws.mediator.komparator.org/", "buyCart");
-    private final static QName _InvalidCartId_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidCartId");
-    private final static QName _Clear_QNAME = new QName("http://ws.mediator.komparator.org/", "clear");
-    private final static QName _InvalidQuantity_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidQuantity");
     private final static QName _ShopHistoryResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "shopHistoryResponse");
-    private final static QName _EmptyCart_QNAME = new QName("http://ws.mediator.komparator.org/", "EmptyCart");
     private final static QName _InvalidCreditCard_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidCreditCard");
     private final static QName _AddToCartResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "addToCartResponse");
     private final static QName _GetItemsResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "getItemsResponse");
-    private final static QName _ListCartsResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "listCartsResponse");
     private final static QName _NotEnoughItems_QNAME = new QName("http://ws.mediator.komparator.org/", "NotEnoughItems");
-    private final static QName _ListCarts_QNAME = new QName("http://ws.mediator.komparator.org/", "listCarts");
     private final static QName _ShopHistory_QNAME = new QName("http://ws.mediator.komparator.org/", "shopHistory");
     private final static QName _Ping_QNAME = new QName("http://ws.mediator.komparator.org/", "ping");
+    private final static QName _InvalidItemId_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidItemId");
+    private final static QName _ImAlive_QNAME = new QName("http://ws.mediator.komparator.org/", "imAlive");
+    private final static QName _InvalidText_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidText");
+    private final static QName _PingResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "pingResponse");
+    private final static QName _ImAliveResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "imAliveResponse");
+    private final static QName _InvalidCartId_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidCartId");
+    private final static QName _Clear_QNAME = new QName("http://ws.mediator.komparator.org/", "clear");
+    private final static QName _InvalidQuantity_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidQuantity");
+    private final static QName _EmptyCart_QNAME = new QName("http://ws.mediator.komparator.org/", "EmptyCart");
+    private final static QName _ListCartsResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "listCartsResponse");
+    private final static QName _ListCarts_QNAME = new QName("http://ws.mediator.komparator.org/", "listCarts");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.komparator.mediator.ws
@@ -64,27 +66,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ListCartsResponse }
-     * 
-     */
-    public ListCartsResponse createListCartsResponse() {
-        return new ListCartsResponse();
-    }
-
-    /**
      * Create an instance of {@link NotEnoughItems }
      * 
      */
     public NotEnoughItems createNotEnoughItems() {
         return new NotEnoughItems();
-    }
-
-    /**
-     * Create an instance of {@link ListCarts }
-     * 
-     */
-    public ListCarts createListCarts() {
-        return new ListCarts();
     }
 
     /**
@@ -104,43 +90,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link InvalidCartId }
-     * 
-     */
-    public InvalidCartId createInvalidCartId() {
-        return new InvalidCartId();
-    }
-
-    /**
-     * Create an instance of {@link Clear }
-     * 
-     */
-    public Clear createClear() {
-        return new Clear();
-    }
-
-    /**
-     * Create an instance of {@link InvalidQuantity }
-     * 
-     */
-    public InvalidQuantity createInvalidQuantity() {
-        return new InvalidQuantity();
-    }
-
-    /**
      * Create an instance of {@link ShopHistoryResponse }
      * 
      */
     public ShopHistoryResponse createShopHistoryResponse() {
         return new ShopHistoryResponse();
-    }
-
-    /**
-     * Create an instance of {@link EmptyCart }
-     * 
-     */
-    public EmptyCart createEmptyCart() {
-        return new EmptyCart();
     }
 
     /**
@@ -184,14 +138,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link InvalidItemId }
-     * 
-     */
-    public InvalidItemId createInvalidItemId() {
-        return new InvalidItemId();
-    }
-
-    /**
      * Create an instance of {@link ClearResponse }
      * 
      */
@@ -208,22 +154,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link InvalidText }
-     * 
-     */
-    public InvalidText createInvalidText() {
-        return new InvalidText();
-    }
-
-    /**
-     * Create an instance of {@link PingResponse }
-     * 
-     */
-    public PingResponse createPingResponse() {
-        return new PingResponse();
-    }
-
-    /**
      * Create an instance of {@link SearchItems }
      * 
      */
@@ -237,6 +167,94 @@ public class ObjectFactory {
      */
     public BuyCartResponse createBuyCartResponse() {
         return new BuyCartResponse();
+    }
+
+    /**
+     * Create an instance of {@link ListCartsResponse }
+     * 
+     */
+    public ListCartsResponse createListCartsResponse() {
+        return new ListCartsResponse();
+    }
+
+    /**
+     * Create an instance of {@link ListCarts }
+     * 
+     */
+    public ListCarts createListCarts() {
+        return new ListCarts();
+    }
+
+    /**
+     * Create an instance of {@link InvalidCartId }
+     * 
+     */
+    public InvalidCartId createInvalidCartId() {
+        return new InvalidCartId();
+    }
+
+    /**
+     * Create an instance of {@link Clear }
+     * 
+     */
+    public Clear createClear() {
+        return new Clear();
+    }
+
+    /**
+     * Create an instance of {@link InvalidQuantity }
+     * 
+     */
+    public InvalidQuantity createInvalidQuantity() {
+        return new InvalidQuantity();
+    }
+
+    /**
+     * Create an instance of {@link EmptyCart }
+     * 
+     */
+    public EmptyCart createEmptyCart() {
+        return new EmptyCart();
+    }
+
+    /**
+     * Create an instance of {@link ImAliveResponse }
+     * 
+     */
+    public ImAliveResponse createImAliveResponse() {
+        return new ImAliveResponse();
+    }
+
+    /**
+     * Create an instance of {@link InvalidItemId }
+     * 
+     */
+    public InvalidItemId createInvalidItemId() {
+        return new InvalidItemId();
+    }
+
+    /**
+     * Create an instance of {@link ImAlive }
+     * 
+     */
+    public ImAlive createImAlive() {
+        return new ImAlive();
+    }
+
+    /**
+     * Create an instance of {@link InvalidText }
+     * 
+     */
+    public InvalidText createInvalidText() {
+        return new InvalidText();
+    }
+
+    /**
+     * Create an instance of {@link PingResponse }
+     * 
+     */
+    public PingResponse createPingResponse() {
+        return new PingResponse();
     }
 
     /**
@@ -280,15 +298,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link InvalidItemId }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "InvalidItemId")
-    public JAXBElement<InvalidItemId> createInvalidItemId(InvalidItemId value) {
-        return new JAXBElement<InvalidItemId>(_InvalidItemId_QNAME, InvalidItemId.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ClearResponse }{@code >}}
      * 
      */
@@ -304,24 +313,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "addToCart")
     public JAXBElement<AddToCart> createAddToCart(AddToCart value) {
         return new JAXBElement<AddToCart>(_AddToCart_QNAME, AddToCart.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link InvalidText }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "InvalidText")
-    public JAXBElement<InvalidText> createInvalidText(InvalidText value) {
-        return new JAXBElement<InvalidText>(_InvalidText_QNAME, InvalidText.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link PingResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "pingResponse")
-    public JAXBElement<PingResponse> createPingResponse(PingResponse value) {
-        return new JAXBElement<PingResponse>(_PingResponse_QNAME, PingResponse.class, null, value);
     }
 
     /**
@@ -370,48 +361,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link InvalidCartId }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "InvalidCartId")
-    public JAXBElement<InvalidCartId> createInvalidCartId(InvalidCartId value) {
-        return new JAXBElement<InvalidCartId>(_InvalidCartId_QNAME, InvalidCartId.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Clear }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "clear")
-    public JAXBElement<Clear> createClear(Clear value) {
-        return new JAXBElement<Clear>(_Clear_QNAME, Clear.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link InvalidQuantity }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "InvalidQuantity")
-    public JAXBElement<InvalidQuantity> createInvalidQuantity(InvalidQuantity value) {
-        return new JAXBElement<InvalidQuantity>(_InvalidQuantity_QNAME, InvalidQuantity.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ShopHistoryResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "shopHistoryResponse")
     public JAXBElement<ShopHistoryResponse> createShopHistoryResponse(ShopHistoryResponse value) {
         return new JAXBElement<ShopHistoryResponse>(_ShopHistoryResponse_QNAME, ShopHistoryResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyCart }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "EmptyCart")
-    public JAXBElement<EmptyCart> createEmptyCart(EmptyCart value) {
-        return new JAXBElement<EmptyCart>(_EmptyCart_QNAME, EmptyCart.class, null, value);
     }
 
     /**
@@ -442,30 +397,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ListCartsResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "listCartsResponse")
-    public JAXBElement<ListCartsResponse> createListCartsResponse(ListCartsResponse value) {
-        return new JAXBElement<ListCartsResponse>(_ListCartsResponse_QNAME, ListCartsResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link NotEnoughItems }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "NotEnoughItems")
     public JAXBElement<NotEnoughItems> createNotEnoughItems(NotEnoughItems value) {
         return new JAXBElement<NotEnoughItems>(_NotEnoughItems_QNAME, NotEnoughItems.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ListCarts }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "listCarts")
-    public JAXBElement<ListCarts> createListCarts(ListCarts value) {
-        return new JAXBElement<ListCarts>(_ListCarts_QNAME, ListCarts.class, null, value);
     }
 
     /**
@@ -484,6 +421,105 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "ping")
     public JAXBElement<Ping> createPing(Ping value) {
         return new JAXBElement<Ping>(_Ping_QNAME, Ping.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InvalidItemId }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "InvalidItemId")
+    public JAXBElement<InvalidItemId> createInvalidItemId(InvalidItemId value) {
+        return new JAXBElement<InvalidItemId>(_InvalidItemId_QNAME, InvalidItemId.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ImAlive }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "imAlive")
+    public JAXBElement<ImAlive> createImAlive(ImAlive value) {
+        return new JAXBElement<ImAlive>(_ImAlive_QNAME, ImAlive.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InvalidText }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "InvalidText")
+    public JAXBElement<InvalidText> createInvalidText(InvalidText value) {
+        return new JAXBElement<InvalidText>(_InvalidText_QNAME, InvalidText.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link PingResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "pingResponse")
+    public JAXBElement<PingResponse> createPingResponse(PingResponse value) {
+        return new JAXBElement<PingResponse>(_PingResponse_QNAME, PingResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ImAliveResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "imAliveResponse")
+    public JAXBElement<ImAliveResponse> createImAliveResponse(ImAliveResponse value) {
+        return new JAXBElement<ImAliveResponse>(_ImAliveResponse_QNAME, ImAliveResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InvalidCartId }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "InvalidCartId")
+    public JAXBElement<InvalidCartId> createInvalidCartId(InvalidCartId value) {
+        return new JAXBElement<InvalidCartId>(_InvalidCartId_QNAME, InvalidCartId.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Clear }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "clear")
+    public JAXBElement<Clear> createClear(Clear value) {
+        return new JAXBElement<Clear>(_Clear_QNAME, Clear.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InvalidQuantity }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "InvalidQuantity")
+    public JAXBElement<InvalidQuantity> createInvalidQuantity(InvalidQuantity value) {
+        return new JAXBElement<InvalidQuantity>(_InvalidQuantity_QNAME, InvalidQuantity.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyCart }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "EmptyCart")
+    public JAXBElement<EmptyCart> createEmptyCart(EmptyCart value) {
+        return new JAXBElement<EmptyCart>(_EmptyCart_QNAME, EmptyCart.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListCartsResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "listCartsResponse")
+    public JAXBElement<ListCartsResponse> createListCartsResponse(ListCartsResponse value) {
+        return new JAXBElement<ListCartsResponse>(_ListCartsResponse_QNAME, ListCartsResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListCarts }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "listCarts")
+    public JAXBElement<ListCarts> createListCarts(ListCarts value) {
+        return new JAXBElement<ListCarts>(_ListCarts_QNAME, ListCarts.class, null, value);
     }
 
 }

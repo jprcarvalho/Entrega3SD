@@ -11,12 +11,14 @@ org/komparator/mediator/ws/InvalidCreditCard_Exception.class
 org/komparator/mediator/ws/MediatorPortType.class
 org/komparator/mediator/ws/cli/MediatorClientException.class
 org/komparator/mediator/ws/MediatorService.class
+org/komparator/mediator/ws/ImAlive.class
 org/komparator/mediator/ws/Result.class
 org/komparator/mediator/ws/InvalidCartId_Exception.class
 org/komparator/mediator/ws/ShoppingResultView.class
 org/komparator/mediator/ws/InvalidItemId.class
 org/komparator/mediator/ws/InvalidText.class
 org/komparator/mediator/ws/CartItemView.class
+org/komparator/mediator/ws/ImAliveResponse.class
 org/komparator/mediator/ws/AddToCart.class
 org/komparator/mediator/ws/CartView.class
 org/komparator/mediator/ws/BuyCart.class
@@ -24,9 +26,9 @@ org/komparator/mediator/ws/ShopHistory.class
 org/komparator/mediator/ws/ItemView.class
 org/komparator/mediator/ws/ListCarts.class
 org/komparator/mediator/ws/ObjectFactory.class
-org/komparator/mediator/ws/EmptyCart.class
-org/komparator/mediator/ws/BuyCartResponse.class
 org/komparator/mediator/ws/cli/MediatorClientApp.class
+org/komparator/mediator/ws/BuyCartResponse.class
+org/komparator/mediator/ws/EmptyCart.class
 org/komparator/mediator/ws/cli/MediatorClient.class
 org/komparator/mediator/ws/ShopHistoryResponse.class
 org/komparator/mediator/ws/ItemIdView.class

@@ -164,6 +164,13 @@ public class MediatorClient implements MediatorPortType{
 	 public void clear() {
 		 port.clear();
 	 }
+     @Override 
+     public void imAlive() {
+    	 System.out.println("Applying ImAlive on stub\n");
+		 port.imAlive();
+    	 System.out.println("Applied ImAlive on stub\n");
+
+	 }
 
     @Override
 	 public String ping(String arg0) {

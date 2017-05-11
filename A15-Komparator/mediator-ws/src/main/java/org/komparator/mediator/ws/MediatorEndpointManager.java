@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.xml.ws.Endpoint;
 
+import org.komparator.mediator.ws.cli.MediatorClientException;
+
 import pt.ulisboa.tecnico.sdis.ws.uddi.UDDINaming;
 
 /** End point manager */
@@ -86,10 +88,23 @@ public class MediatorEndpointManager {
 			}
 			throw e;
 		}
-		publishToUDDI();
+			//only the first mediator publishes to uddi by default
+			
+			if(this.wsURL.equals("http://localhost:8071/mediator-ws/endpoint")){
+				publishToUDDI();
+				portImpl.setPrimary(true);
+				
+				}
+			else{
+				System.out.println("Only http://localhost:8071/mediator-ws/endpoint registers to UDDI by default, @MediatorEndpointManager");
+				portImpl.setPrimary(false);
+				};
+				
+			System.out.println("Mediator running as primary: " + portImpl.getPrimary());
 	}
 
-	public void awaitConnections() {
+	public void awaitConnections() throws MediatorClientException {
+		portImpl.LifeProofBoot();
 		if (verbose) {
 			System.out.println("Awaiting connections");
 			System.out.println("Press enter to shutdown");
@@ -118,6 +133,7 @@ public class MediatorEndpointManager {
 			}
 		}
 // TODO uncomment after port implementation is done
+		this.portImpl.killLifeProof();
 		this.portImpl = null;
 		unpublishFromUDDI();
 	}

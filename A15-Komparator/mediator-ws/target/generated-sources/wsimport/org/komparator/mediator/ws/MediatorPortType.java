@@ -37,6 +37,15 @@ public interface MediatorPortType {
 
     /**
      * 
+     */
+    @WebMethod
+    @RequestWrapper(localName = "imAlive", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.ImAlive")
+    @ResponseWrapper(localName = "imAliveResponse", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.ImAliveResponse")
+    @Action(input = "http://ws.mediator.komparator.org/Mediator/imAliveRequest", output = "http://ws.mediator.komparator.org/Mediator/imAliveResponse")
+    public void imAlive();
+
+    /**
+     * 
      * @param productId
      * @return
      *     returns java.util.List<org.komparator.mediator.ws.ItemView>
@@ -93,9 +102,9 @@ public interface MediatorPortType {
      * @param cartId
      * @return
      *     returns org.komparator.mediator.ws.ShoppingResultView
-     * @throws EmptyCart_Exception
      * @throws InvalidCreditCard_Exception
      * @throws InvalidCartId_Exception
+     * @throws EmptyCart_Exception
      */
     @WebMethod
     @WebResult(name = "shopResult", targetNamespace = "")
@@ -119,10 +128,10 @@ public interface MediatorPortType {
      * @param itemId
      * @param itemQty
      * @param cartId
-     * @throws InvalidItemId_Exception
      * @throws InvalidQuantity_Exception
      * @throws NotEnoughItems_Exception
      * @throws InvalidCartId_Exception
+     * @throws InvalidItemId_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "addToCart", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.AddToCart")

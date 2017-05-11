@@ -3,8 +3,6 @@ package org.komparator.mediator.ws.it;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.jws.HandlerChain;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.komparator.mediator.ws.cli.MediatorClient;

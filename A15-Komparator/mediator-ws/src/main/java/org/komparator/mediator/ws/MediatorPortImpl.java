@@ -5,6 +5,7 @@ import static javax.xml.ws.BindingProvider.ENDPOINT_ADDRESS_PROPERTY;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.sql.Timestamp;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.InvalidKeyException;
@@ -14,11 +15,13 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+
 import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,6 +36,7 @@ import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.ws.BindingProvider;
 
+import org.komparator.mediator.ws.cli.MediatorClientException;
 import org.komparator.security.CryptoUtil;
 import org.komparator.supplier.ws.BadProduct;
 import org.komparator.supplier.ws.BadProductId;
@@ -125,7 +129,7 @@ public class MediatorPortImpl implements MediatorPortType {
     private PrivateKey privateKey =null;
     private PublicKey publicKey = null;
 	private Certificate cert =null;
-
+	private boolean isPrimary = false;
 	private int i=0;
 	private ArrayList<ShoppingResultView> history = new ArrayList<ShoppingResultView>();
 	private MediatorEndpointManager endpointManager;
@@ -133,7 +137,8 @@ public class MediatorPortImpl implements MediatorPortType {
 	private HashMap<SupplierPortType,String> ports;
 	private ArrayList<CartView> carts = new ArrayList<CartView>();
 	private HashMap<SupplierClient,String> suppliers;
-
+	private Stack<Timestamp> heartbeats; 
+	private LifeProof lp; 
 	public MediatorPortImpl(MediatorEndpointManager endpointManager) {
 		File certificateFile = new File("A15_Mediator.cer");
 		KeystoreSetup();
@@ -162,9 +167,17 @@ public class MediatorPortImpl implements MediatorPortType {
 			e.printStackTrace();
 		}
 		
-		
-	}
 
+	}
+	public void setPrimary(boolean val){this.isPrimary =val;}
+	public boolean getPrimary(){return this.isPrimary;}
+	public void LifeProofBoot() throws MediatorClientException{
+		this.lp = new LifeProof(this);
+		lp.run();
+	}
+	public void killLifeProof(){
+		lp.kill();
+	}
 	// Main operations -------------------------------------------------------
 		 public void KeystoreSetup(){
 			
@@ -466,6 +479,16 @@ public class MediatorPortImpl implements MediatorPortType {
 	
 	// Auxiliary operations --------------------------------------------------	
 	
+	@Override
+	public void imAlive() {
+		// TODO Auto-generated method stub
+		uddiRefreshSuppliers();
+		if(!this.isPrimary){
+			heartbeats.push(new Timestamp(System.currentTimeMillis()));
+					}
+		
+	}
+	
 	public boolean noproperText(String text){
 		//Checks if the string has whitespace then matches it against alphanumeric REGEX 
 		if (text==null ){return true;}
@@ -631,5 +654,6 @@ public class MediatorPortImpl implements MediatorPortType {
 		faultInfo.message = message;
 		throw new InvalidCreditCard_Exception(message, faultInfo);
 	}
+
 
 }

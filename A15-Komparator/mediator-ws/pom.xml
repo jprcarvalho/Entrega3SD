@@ -22,10 +22,19 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <mainclass>org.komparator.mediator.ws.MediatorApp</mainclass>
-
+		 <group.id>A15</group.id>
         <uddi.url>http://localhost:9090</uddi.url>
-        <ws.name>A15_Mediator</ws.name>
-        <ws.url>http://localhost:8080/mediator-ws/endpoint</ws.url>
+         <ws.i>1</ws.i>
+
+  		  <ws.host>localhost</ws.host>
+  		  <ws.port>807${ws.i}</ws.port>
+  		  <ws.url>http://${ws.host}:${ws.port}/mediator-ws/endpoint</ws.url>
+   
+    <ws.name>${group.id}_Mediator</ws.name>
+
+    <supplier.ws.name>${group.id}_Supplier</supplier.ws.name>  
+        
+
     </properties>
 
     <dependencies>
@@ -44,6 +53,12 @@
     <dependency>
         <groupId>org.komparator.A15</groupId>
         <artifactId>supplier-ws-cli</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+    
+      <dependency>
+        <groupId>org.komparator.A15</groupId>
+        <artifactId>mediator-ws-cli</artifactId>
         <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
