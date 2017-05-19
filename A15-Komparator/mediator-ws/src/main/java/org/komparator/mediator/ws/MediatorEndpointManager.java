@@ -103,7 +103,7 @@ public class MediatorEndpointManager {
 			if(this.wsURL.equals("http://localhost:8071/mediator-ws/endpoint")){
 				publishToUDDI();
 				portImpl.setPrimary(true);
-				
+				publishToUDDI();
 				}
 			else{
 				System.out.println("Only http://localhost:8071/mediator-ws/endpoint registers to UDDI by default, @MediatorEndpointManager");

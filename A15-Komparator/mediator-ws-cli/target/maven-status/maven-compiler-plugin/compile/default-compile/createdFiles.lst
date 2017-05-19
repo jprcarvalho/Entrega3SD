@@ -41,6 +41,8 @@ org/komparator/mediator/ws/Result.class
 org/komparator/mediator/ws/GoPrimaryResponse.class
 org/komparator/mediator/ws/UpdateShoppingHistory.class
 org/komparator/mediator/ws/ShopHistory.class
+org/komparator/mediator/ws/cli/MediatorClientApp.class
+org/komparator/mediator/ws/cli/MediatorClient.class
 org/komparator/mediator/ws/ShopHistoryResponse.class
 org/komparator/mediator/ws/ItemIdView.class
 org/komparator/mediator/ws/SearchItems.class
