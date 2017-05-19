@@ -99,6 +99,7 @@ public class MediatorClient implements MediatorPortType{
         uddiLookup();
         createStub();
     }
+    public MediatorPortType getPort (){return this.port;}
 
     private void certificateSetup(){
     	File certificateFile = new File("A15_Mediator.cer");
@@ -164,11 +165,31 @@ public class MediatorClient implements MediatorPortType{
 	 public void clear() {
 		 port.clear();
 	 }
+     
+     
+     @Override
+     public void updateCart(List<CartView> carts){
+    	 port.updateCart(carts);
+    	 
+     }
+     @Override
+     public void updateShoppingHistory(List<ShoppingResultView> history){
+    	 port.updateShoppingHistory(history);
+    	 
+     }
+ 	@Override
+ 	public void goPrimary() {
+ 		 port.goPrimary();
+ 		// TODO Auto-generated method stub
+ 		
+ 	}
+ 	
+ 	
      @Override 
      public void imAlive() {
-    	 System.out.println("Applying ImAlive on stub\n");
+    	 //System.out.println("Applying ImAlive on stub\n");
 		 port.imAlive();
-    	 System.out.println("Applied ImAlive on stub\n");
+    	// System.out.println("Applied ImAlive on stub\n");
 
 	 }
 
@@ -216,5 +237,8 @@ public class MediatorClient implements MediatorPortType{
 	 public List<ShoppingResultView> shopHistory() {
 		 return port.shopHistory();
 	 }
+
+
+
  
 }

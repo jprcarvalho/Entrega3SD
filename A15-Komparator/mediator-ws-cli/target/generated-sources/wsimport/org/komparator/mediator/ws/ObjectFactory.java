@@ -26,22 +26,28 @@ public class ObjectFactory {
 
     private final static QName _ClearResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "clearResponse");
     private final static QName _AddToCart_QNAME = new QName("http://ws.mediator.komparator.org/", "addToCart");
+    private final static QName _GoPrimary_QNAME = new QName("http://ws.mediator.komparator.org/", "goPrimary");
+    private final static QName _UpdateCart_QNAME = new QName("http://ws.mediator.komparator.org/", "updateCart");
     private final static QName _SearchItems_QNAME = new QName("http://ws.mediator.komparator.org/", "searchItems");
     private final static QName _BuyCartResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "buyCartResponse");
+    private final static QName _UpdateCartResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "updateCartResponse");
     private final static QName _GetItems_QNAME = new QName("http://ws.mediator.komparator.org/", "getItems");
     private final static QName _SearchItemsResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "searchItemsResponse");
     private final static QName _BuyCart_QNAME = new QName("http://ws.mediator.komparator.org/", "buyCart");
+    private final static QName _GoPrimaryResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "goPrimaryResponse");
     private final static QName _ShopHistoryResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "shopHistoryResponse");
     private final static QName _InvalidCreditCard_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidCreditCard");
     private final static QName _AddToCartResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "addToCartResponse");
     private final static QName _GetItemsResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "getItemsResponse");
     private final static QName _NotEnoughItems_QNAME = new QName("http://ws.mediator.komparator.org/", "NotEnoughItems");
     private final static QName _ShopHistory_QNAME = new QName("http://ws.mediator.komparator.org/", "shopHistory");
+    private final static QName _UpdateShoppingHistoryResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "updateShoppingHistoryResponse");
     private final static QName _Ping_QNAME = new QName("http://ws.mediator.komparator.org/", "ping");
     private final static QName _InvalidItemId_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidItemId");
     private final static QName _ImAlive_QNAME = new QName("http://ws.mediator.komparator.org/", "imAlive");
     private final static QName _InvalidText_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidText");
     private final static QName _PingResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "pingResponse");
+    private final static QName _UpdateShoppingHistory_QNAME = new QName("http://ws.mediator.komparator.org/", "updateShoppingHistory");
     private final static QName _ImAliveResponse_QNAME = new QName("http://ws.mediator.komparator.org/", "imAliveResponse");
     private final static QName _InvalidCartId_QNAME = new QName("http://ws.mediator.komparator.org/", "InvalidCartId");
     private final static QName _Clear_QNAME = new QName("http://ws.mediator.komparator.org/", "clear");
@@ -82,11 +88,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link UpdateShoppingHistoryResponse }
+     * 
+     */
+    public UpdateShoppingHistoryResponse createUpdateShoppingHistoryResponse() {
+        return new UpdateShoppingHistoryResponse();
+    }
+
+    /**
      * Create an instance of {@link Ping }
      * 
      */
     public Ping createPing() {
         return new Ping();
+    }
+
+    /**
+     * Create an instance of {@link GoPrimaryResponse }
+     * 
+     */
+    public GoPrimaryResponse createGoPrimaryResponse() {
+        return new GoPrimaryResponse();
     }
 
     /**
@@ -111,6 +133,14 @@ public class ObjectFactory {
      */
     public AddToCartResponse createAddToCartResponse() {
         return new AddToCartResponse();
+    }
+
+    /**
+     * Create an instance of {@link UpdateCartResponse }
+     * 
+     */
+    public UpdateCartResponse createUpdateCartResponse() {
+        return new UpdateCartResponse();
     }
 
     /**
@@ -151,6 +181,22 @@ public class ObjectFactory {
      */
     public AddToCart createAddToCart() {
         return new AddToCart();
+    }
+
+    /**
+     * Create an instance of {@link GoPrimary }
+     * 
+     */
+    public GoPrimary createGoPrimary() {
+        return new GoPrimary();
+    }
+
+    /**
+     * Create an instance of {@link UpdateCart }
+     * 
+     */
+    public UpdateCart createUpdateCart() {
+        return new UpdateCart();
     }
 
     /**
@@ -258,6 +304,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link UpdateShoppingHistory }
+     * 
+     */
+    public UpdateShoppingHistory createUpdateShoppingHistory() {
+        return new UpdateShoppingHistory();
+    }
+
+    /**
      * Create an instance of {@link CartView }
      * 
      */
@@ -316,6 +370,24 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GoPrimary }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "goPrimary")
+    public JAXBElement<GoPrimary> createGoPrimary(GoPrimary value) {
+        return new JAXBElement<GoPrimary>(_GoPrimary_QNAME, GoPrimary.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateCart }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "updateCart")
+    public JAXBElement<UpdateCart> createUpdateCart(UpdateCart value) {
+        return new JAXBElement<UpdateCart>(_UpdateCart_QNAME, UpdateCart.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SearchItems }{@code >}}
      * 
      */
@@ -331,6 +403,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "buyCartResponse")
     public JAXBElement<BuyCartResponse> createBuyCartResponse(BuyCartResponse value) {
         return new JAXBElement<BuyCartResponse>(_BuyCartResponse_QNAME, BuyCartResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateCartResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "updateCartResponse")
+    public JAXBElement<UpdateCartResponse> createUpdateCartResponse(UpdateCartResponse value) {
+        return new JAXBElement<UpdateCartResponse>(_UpdateCartResponse_QNAME, UpdateCartResponse.class, null, value);
     }
 
     /**
@@ -358,6 +439,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "buyCart")
     public JAXBElement<BuyCart> createBuyCart(BuyCart value) {
         return new JAXBElement<BuyCart>(_BuyCart_QNAME, BuyCart.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GoPrimaryResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "goPrimaryResponse")
+    public JAXBElement<GoPrimaryResponse> createGoPrimaryResponse(GoPrimaryResponse value) {
+        return new JAXBElement<GoPrimaryResponse>(_GoPrimaryResponse_QNAME, GoPrimaryResponse.class, null, value);
     }
 
     /**
@@ -415,6 +505,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateShoppingHistoryResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "updateShoppingHistoryResponse")
+    public JAXBElement<UpdateShoppingHistoryResponse> createUpdateShoppingHistoryResponse(UpdateShoppingHistoryResponse value) {
+        return new JAXBElement<UpdateShoppingHistoryResponse>(_UpdateShoppingHistoryResponse_QNAME, UpdateShoppingHistoryResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Ping }{@code >}}
      * 
      */
@@ -457,6 +556,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "pingResponse")
     public JAXBElement<PingResponse> createPingResponse(PingResponse value) {
         return new JAXBElement<PingResponse>(_PingResponse_QNAME, PingResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateShoppingHistory }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mediator.komparator.org/", name = "updateShoppingHistory")
+    public JAXBElement<UpdateShoppingHistory> createUpdateShoppingHistory(UpdateShoppingHistory value) {
+        return new JAXBElement<UpdateShoppingHistory>(_UpdateShoppingHistory_QNAME, UpdateShoppingHistory.class, null, value);
     }
 
     /**

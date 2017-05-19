@@ -50,6 +50,19 @@ wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
             <xs:element name="imAlive" type="tns:imAlive"/>
 
             <xs:element name="imAliveResponse" type="tns:imAliveResponse"/>
+            
+            <xs:element name="goPrimary" type="tns:goPrimary"/>
+
+            <xs:element name="goPrimaryResponse" type="tns:goPrimaryResponse"/>
+            
+            <xs:element name="updateCart" type="tns:updateCart"/>
+
+            <xs:element name="updateCartResponse" type="tns:updateCartResponse"/>
+           
+            <xs:element name="updateShoppingHistory" type="tns:updateShoppingHistory"/>
+
+            <xs:element name="updateShoppingHistoryResponse" type="tns:updateShoppingHistoryResponse"/> 
+            
 
             <xs:element name="getItems" type="tns:getItems"/>
 
@@ -208,6 +221,37 @@ wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
                 <xs:sequence/>
             </xs:complexType>
             
+            <xs:complexType name="updateCart">
+                <xs:sequence>
+                    <xs:element name="carts" type="tns:cartView" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="updateCartResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            
+            <xs:complexType name="updateShoppingHistory">
+                <xs:sequence>
+                        <xs:element name="shoppingHistory" type="tns:shoppingResultView" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="updateShoppingHistoryResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            
+                     
+            <xs:complexType name="goPrimary">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="goPrimaryResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            
             <xs:complexType name="addToCart">
                 <xs:sequence>
                     <xs:element name="cartId" type="xs:string" minOccurs="0"/>
@@ -275,7 +319,26 @@ wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
     <message name="imAliveResponse">
         <part name="parameters" element="tns:imAliveResponse"/>
     </message>
+    <message name="updateCart">
+        <part name="parameters" element="tns:updateCart"/>
+    </message>
+    <message name="updateCartResponse">
+        <part name="parameters" element="tns:updateCartResponse"/>
+    </message>
     
+        <message name="updateShoppingHistory">
+        <part name="parameters" element="tns:updateShoppingHistory"/>
+    </message>
+    <message name="updateShoppingHistoryResponse">
+        <part name="parameters" element="tns:updateShoppingHistoryResponse"/>
+    </message>
+    
+           <message name="goPrimary">
+        <part name="parameters" element="tns:goPrimary"/>
+    </message>
+    <message name="goPrimaryResponse">
+        <part name="parameters" element="tns:goPrimaryResponse"/>
+    </message>
     
     
     <message name="getItems">
@@ -353,6 +416,19 @@ wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
             <input wsam:Action="http://ws.mediator.komparator.org/Mediator/imAliveRequest" message="tns:imAlive"/>
             <output wsam:Action="http://ws.mediator.komparator.org/Mediator/imAliveResponse" message="tns:imAliveResponse"/>
         </operation>
+        <operation name="updateCart">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/updateCartRequest" message="tns:updateCart"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/updateCartResponse" message="tns:updateCartResponse"/>
+        </operation>
+        
+        <operation name="updateShoppingHistory">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/updateShoppingHistoryRequest" message="tns:updateShoppingHistory"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/updateShoppingHistoryResponse" message="tns:updateShoppingHistoryResponse"/>
+        </operation>
+        <operation name="goPrimary">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/goPrimaryRequest" message="tns:goPrimary"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/goPrimaryResponse" message="tns:goPrimaryResponse"/>
+        </operation>
         <operation name="getItems">
             <input wsam:Action="http://ws.mediator.komparator.org/Mediator/getItemsRequest" message="tns:getItems"/>
             <output wsam:Action="http://ws.mediator.komparator.org/Mediator/getItemsResponse" message="tns:getItemsResponse"/>
@@ -405,6 +481,35 @@ wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
             </output>
         </operation>
         <operation name="imAlive">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        
+        <operation name="updateCart">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="updateShoppingHistory">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        
+         <operation name="goPrimary">
             <soap:operation soapAction=""/>
             <input>
                 <soap:body use="literal"/>

@@ -48,6 +48,39 @@ public interface MediatorPortType {
 
     /**
      * 
+     * @param carts
+     */
+    @WebMethod
+    @RequestWrapper(localName = "updateCart", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.UpdateCart")
+    @ResponseWrapper(localName = "updateCartResponse", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.UpdateCartResponse")
+    @Action(input = "http://ws.mediator.komparator.org/Mediator/updateCartRequest", output = "http://ws.mediator.komparator.org/Mediator/updateCartResponse")
+    public void updateCart(
+        @WebParam(name = "carts", targetNamespace = "")
+        List<CartView> carts);
+
+    /**
+     * 
+     * @param shoppingHistory
+     */
+    @WebMethod
+    @RequestWrapper(localName = "updateShoppingHistory", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.UpdateShoppingHistory")
+    @ResponseWrapper(localName = "updateShoppingHistoryResponse", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.UpdateShoppingHistoryResponse")
+    @Action(input = "http://ws.mediator.komparator.org/Mediator/updateShoppingHistoryRequest", output = "http://ws.mediator.komparator.org/Mediator/updateShoppingHistoryResponse")
+    public void updateShoppingHistory(
+        @WebParam(name = "shoppingHistory", targetNamespace = "")
+        List<ShoppingResultView> shoppingHistory);
+
+    /**
+     * 
+     */
+    @WebMethod
+    @RequestWrapper(localName = "goPrimary", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.GoPrimary")
+    @ResponseWrapper(localName = "goPrimaryResponse", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.GoPrimaryResponse")
+    @Action(input = "http://ws.mediator.komparator.org/Mediator/goPrimaryRequest", output = "http://ws.mediator.komparator.org/Mediator/goPrimaryResponse")
+    public void goPrimary();
+
+    /**
+     * 
      * @param productId
      * @return
      *     returns java.util.List<org.komparator.mediator.ws.ItemView>
@@ -105,8 +138,8 @@ public interface MediatorPortType {
      * @return
      *     returns org.komparator.mediator.ws.ShoppingResultView
      * @throws EmptyCart_Exception
-     * @throws InvalidCartId_Exception
      * @throws InvalidCreditCard_Exception
+     * @throws InvalidCartId_Exception
      */
     @WebMethod
     @WebResult(name = "shopResult", targetNamespace = "")
@@ -131,9 +164,9 @@ public interface MediatorPortType {
      * @param itemQty
      * @param cartId
      * @throws NotEnoughItems_Exception
-     * @throws InvalidItemId_Exception
      * @throws InvalidQuantity_Exception
      * @throws InvalidCartId_Exception
+     * @throws InvalidItemId_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "addToCart", targetNamespace = "http://ws.mediator.komparator.org/", className = "org.komparator.mediator.ws.AddToCart")

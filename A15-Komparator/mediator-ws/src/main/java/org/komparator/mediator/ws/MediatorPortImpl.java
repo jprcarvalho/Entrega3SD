@@ -33,6 +33,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.jws.HandlerChain;
+import javax.jws.Oneway;
 import javax.jws.WebService;
 import javax.xml.ws.BindingProvider;
 
@@ -141,6 +142,7 @@ public class MediatorPortImpl implements MediatorPortType {
 	private LifeProof lp; 
 	public MediatorPortImpl(MediatorEndpointManager endpointManager) {
 		File certificateFile = new File("A15_Mediator.cer");
+		heartbeats = new Stack<Timestamp>();
 		KeystoreSetup();
 			try {
 				this.cert = CertUtil.getX509CertificateFromFile(certificateFile);
@@ -169,7 +171,13 @@ public class MediatorPortImpl implements MediatorPortType {
 		
 
 	}
-	public void setPrimary(boolean val){this.isPrimary =val;}
+	public MediatorEndpointManager getMediatorEndpointManager(){return this.endpointManager;}
+	public void setPrimary(boolean val){
+		
+		this.isPrimary =val; 
+
+	}
+	
 	public boolean getPrimary(){return this.isPrimary;}
 	public void LifeProofBoot() throws MediatorClientException{
 		this.lp = new LifeProof(this);
@@ -179,7 +187,24 @@ public class MediatorPortImpl implements MediatorPortType {
 		lp.kill();
 	}
 	// Main operations -------------------------------------------------------
-		 public void KeystoreSetup(){
+
+
+
+	@Override
+	@Oneway
+	public void updateShoppingHistory(List<ShoppingResultView> shoppingHistory) {
+		this.history = (ArrayList<ShoppingResultView>) shoppingHistory;
+		
+	}
+	
+
+	@Override
+	@Oneway
+	public void updateCart(List<CartView> carts) {
+			this.carts =(ArrayList<CartView>)carts;
+	}
+	
+	public void KeystoreSetup(){
 			
 			try {
 				this.keys=CertUtil.readKeystoreFromFile("A15_Mediator.jks", keystorePassword);
@@ -258,6 +283,7 @@ public class MediatorPortImpl implements MediatorPortType {
 		this.i++;
 		return (new Integer(i)).toString();
 	}
+	
 	
 	
 	@Override
@@ -480,13 +506,26 @@ public class MediatorPortImpl implements MediatorPortType {
 	// Auxiliary operations --------------------------------------------------	
 	
 	@Override
+	public void goPrimary() {
+		//Needs further fixing
+		this.setPrimary(true);
+		
+	}
+	
+	@Override
 	public void imAlive() {
-		// TODO Auto-generated method stub
-		uddiRefreshSuppliers();
+		if(!this.isPrimary){
+			
+			System.out.println("Bla\n");
+			Timestamp time = new Timestamp(System.currentTimeMillis());
+			this.heartbeats.push(time);
+		}
+		/*
+		
 		if(!this.isPrimary){
 			heartbeats.push(new Timestamp(System.currentTimeMillis()));
 					}
-		
+		*/
 	}
 	
 	public boolean noproperText(String text){
@@ -654,6 +693,11 @@ public class MediatorPortImpl implements MediatorPortType {
 		faultInfo.message = message;
 		throw new InvalidCreditCard_Exception(message, faultInfo);
 	}
+
+
+
+	
+
 
 
 }

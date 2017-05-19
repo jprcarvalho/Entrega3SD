@@ -20,7 +20,17 @@ public class MediatorEndpointManager {
 	public String getWsName() {
 		return wsName;
 	}
-
+	public void setWsURL(String url){
+		this.wsURL = url;
+		
+	}
+	public void setWsName(String name){
+		this.wsName = name;
+	}
+	public void setUddiUrl(String url){
+		this.uddiURL = url;
+		
+	}
 	/** Web Service location to publish */
 	private String wsURL = null;
 	public String getuddiURL(){return this.uddiURL;}
